@@ -1,0 +1,14 @@
+syntax-error
+comment
+file-start
+file-end
+terminal
+string
+rule-start
+rule-end
+rule-name
+alternative
+incremental-alternative
+value-range-alternative
+sequence-group-begin
+sequence-group-end
