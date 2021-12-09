@@ -12,6 +12,23 @@ const (
 )
 
 var (
+	REPETITION_SPECIFIC = []char.Pattern{
+		char.DIGIT,
+	}
+	REPETITION_VARIABLE_MIN_MAX = []char.Pattern{
+		char.DIGIT,
+		char.ASTERISK,
+		char.DIGIT,
+	}
+	REPETITION_VARIABLE_MIN_ONLY = []char.Pattern{
+		char.DIGIT,
+		char.ASTERISK,
+	}
+	REPETITION_VARIABLE_MAX_ONLY = []char.Pattern{
+		char.ASTERISK,
+		char.DIGIT,
+	}
+
 	Rules = map[string]*Rule{
 		"ALPHA": {
 			Name:     "ALPHA",

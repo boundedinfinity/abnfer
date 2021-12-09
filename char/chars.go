@@ -15,6 +15,9 @@ var (
 	SP     = List(0x20)
 	VCHAR  = Range(0x21, 0x7E)
 
+	PERCENT  = List(0x25)
+	ASTERISK = List(0x2A)
+
 	MAP = map[string]Pattern{
 		"ALPHA":  ALPHA,
 		"BIT":    BIT,
