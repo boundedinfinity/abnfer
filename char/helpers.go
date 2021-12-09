@@ -2,51 +2,42 @@ package char
 
 import "bytes"
 
-type Pattern []byte
+func HasPrefix(s string, cs []Char) bool {
+	return bytes.HasPrefix([]byte(s), []byte(string(cs)))
+}
 
-func HasPrefix(s string, patterns ...Pattern) bool {
-	x := []byte(s)
+func Range(s, e Char) []Char {
+	var l []Char
 
-	for _, pattern := range patterns {
-		if bytes.HasPrefix(x, pattern) {
-			return true
+	for c := s; c <= e; c++ {
+		l = append(l, c)
+	}
+
+	return l
+}
+
+func FilteredRange(s, e Char, fs []Char) []Char {
+	var l []Char
+
+	for c := s; c <= e; c++ {
+		for _, f := range fs {
+			if c == f {
+				continue
+			}
 		}
+
+		l = append(l, c)
 	}
 
-	return false
+	return l
 }
 
-func OneOf(s string) bool {
-	_, ok := MAP[s]
-	return ok
-}
+func FromString(s string) []Char {
+	var l []Char
 
-func Concat(ps ...Pattern) Pattern {
-	var n Pattern
-
-	for _, p := range ps {
-		n = append(n, p...)
+	for _, c := range s {
+		l = append(l, Char(c))
 	}
 
-	return n
-}
-
-func Range(s, e int) Pattern {
-	var p Pattern
-
-	for i := s; i <= e; i++ {
-		p = append(p, byte(i))
-	}
-
-	return p
-}
-
-func List(is ...int) Pattern {
-	var p Pattern
-
-	for _, i := range is {
-		p = append(p, byte(i))
-	}
-
-	return p
+	return l
 }

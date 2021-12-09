@@ -1,19 +1,17 @@
 package lexer_test
 
-// import (
-// 	"fmt"
-// 	"sync"
-// 	"testing"
+import (
+	"fmt"
+	"testing"
 
-// 	"github.com/boundedinfinity/abnfer/lexer"
-// 	. "github.com/onsi/ginkgo"
-// 	. "github.com/onsi/gomega"
-// )
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
-// func TestRegex(t *testing.T) {
-// 	RegisterFailHandler(Fail)
-// 	RunSpecs(t, "Lexer Suite")
-// }
+func TestRegex(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Lexer Suite")
+}
 
 // var (
 // 	spec1 = `
@@ -23,21 +21,26 @@ package lexer_test
 // 	`
 // )
 
-// var _ = Describe("Lex", func() {
-// 	Context("should match full year", func() {
-// 		l := lexer.New("test", spec1)
-// 		wg := sync.WaitGroup{}
+var _ = Describe("Lex", func() {
+	Context("should match full year", func() {
+		for i := 0; i <= 255; i++ {
+			fmt.Printf("%d - %X - %s\n", i, i, string(byte(i)))
+		}
+	})
+	// Context("should match full year", func() {
+	// 	l := lexer.New("test", spec1)
+	// 	wg := sync.WaitGroup{}
 
-// 		wg.Add(1)
-// 		go func() {
-// 			defer wg.Done()
-// 			for token := range l.Ch {
-// 				fmt.Printf("token type: %v, Value: %v\n", token.Type, token.Value)
-// 			}
-// 		}()
+	// 	wg.Add(1)
+	// 	go func() {
+	// 		defer wg.Done()
+	// 		for token := range l.Ch {
+	// 			fmt.Printf("token type: %v, Value: %v\n", token.Type, token.Value)
+	// 		}
+	// 	}()
 
-// 		l.Run()
+	// 	l.Run()
 
-// 		wg.Wait()
-// 	})
-// })
+	// 	wg.Wait()
+	// })
+})

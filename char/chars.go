@@ -1,44 +1,137 @@
 package char
 
-var (
-	ALPHA  = Pattern{}
-	BIT    = List(0x30, 0x31) // 0,1
-	CHAR   = Range(0x01, 0x7F)
-	CR     = List(0x0D)
-	CTL    = Pattern{}
-	DIGIT  = Range(0x30, 0x39)
-	DQUOTE = List(0x22)
-	HEXDIG = Pattern{}
-	HTAB   = List(0x09)
-	LF     = List(0x0A)
-	OCTET  = Range(0x00, 0xFF)
-	SP     = List(0x20)
-	VCHAR  = Range(0x21, 0x7E)
+type Char byte
 
-	PERCENT  = List(0x25)
-	ASTERISK = List(0x2A)
+func (c Char) Byte() byte     { return byte(c) }
+func (c Char) String() string { return string(c) }
 
-	MAP = map[string]Pattern{
-		"ALPHA":  ALPHA,
-		"BIT":    BIT,
-		"CHAR":   CHAR,
-		"CR":     CR,
-		"CTL":    CTL,
-		"DIGIT":  DIGIT,
-		"DQUOTE": DQUOTE,
-		"HTAB":   HTAB,
-		"LF":     LF,
-		"OCTET":  OCTET,
-		"SP":     SP,
-		"VCHAR":  VCHAR,
-	}
+const (
+	NULL                      Char = 0
+	START_OF_HEADER           Char = 1
+	START_OF_TEXT             Char = 2
+	END_OF_TEXT               Char = 3
+	END_OF_TRANSMISSION       Char = 4
+	ENQUIRY                   Char = 5
+	ACKNOWLEDGE               Char = 6
+	BELL                      Char = 7
+	BACKSPACE                 Char = 8
+	HORIZONTAL_TAB            Char = 9
+	LINE_FEED                 Char = 10
+	VERTICAL_TAB              Char = 11
+	FORM_FEED                 Char = 12
+	CARRIAGE_RETURN           Char = 13
+	SHIFT_OUT                 Char = 14
+	SHIFT_IN                  Char = 15
+	DATA_LINK_ESCAPE          Char = 16
+	DEVICE_CONTROL_1          Char = 17
+	DEVICE_CONTROL_2          Char = 18
+	DEVICE_CONTROL_3          Char = 19
+	DEVICE_CONTROL_4          Char = 20
+	NEGATIVE_ACKNOLEDGE       Char = 21
+	SYNCHRONIZE               Char = 22
+	END_OF_TRANSMISSION_BLOCK Char = 23
+	CANCEL                    Char = 24
+	END_OF_MEDIUM             Char = 25
+	SUBSTITUE                 Char = 26
+	ESCAPE                    Char = 27
+	FILE_SEPARATOR            Char = 28
+	GROUP_SEPARATOR           Char = 29
+	RECORD_SEPARATOR          Char = 30
+	UNIT_SEPARATOR            Char = 31
+	SPACE                     Char = 32
+	EXCLAMATION_MARK          Char = 33
+	DOUBLE_QUOTE              Char = 34
+	NUMBER                    Char = 35
+	DOLLAR                    Char = 36
+	PERCENT                   Char = 37
+	AMPERSAND                 Char = 38
+	SINGLE_QUOTE              Char = 39
+	LEFT_PARENTHESIS          Char = 40
+	RIGHT_PARENTHESIS         Char = 41
+	ASTERISK                  Char = 42
+	PLUS                      Char = 43
+	COMMA                     Char = 44
+	MINUS                     Char = 45
+	PERIOD                    Char = 46
+	SLASH                     Char = 47
+	ZERO                      Char = 48
+	ONE                       Char = 49
+	TWO                       Char = 50
+	THREE                     Char = 51
+	FOUR                      Char = 52
+	FIVE                      Char = 53
+	SIX                       Char = 54
+	SEVEN                     Char = 55
+	EIGHT                     Char = 56
+	NINE                      Char = 57
+	COLON                     Char = 58
+	SEMICOLON                 Char = 59
+	LESS_THAN                 Char = 60
+	EQUAL_SIGN                Char = 61
+	GREATER_THAN              Char = 62
+	QUESTION_MARK             Char = 63
+	AT_SIGN                   Char = 64
+	UPPERCASE_A               Char = 65
+	UPPERCASE_B               Char = 66
+	UPPERCASE_C               Char = 67
+	UPPERCASE_D               Char = 68
+	UPPERCASE_E               Char = 69
+	UPPERCASE_f               Char = 70
+	UPPERCASE_G               Char = 71
+	UPPERCASE_H               Char = 72
+	UPPERCASE_I               Char = 73
+	UPPERCASE_J               Char = 74
+	UPPERCASE_K               Char = 75
+	UPPERCASE_L               Char = 76
+	UPPERCASE_M               Char = 77
+	UPPERCASE_N               Char = 78
+	UPPERCASE_O               Char = 79
+	UPPERCASE_P               Char = 80
+	UPPERCASE_Q               Char = 81
+	UPPERCASE_R               Char = 82
+	UPPERCASE_S               Char = 83
+	UPPERCASE_T               Char = 84
+	UPPERCASE_U               Char = 85
+	UPPERCASE_V               Char = 86
+	UPPERCASE_W               Char = 87
+	UPPERCASE_X               Char = 88
+	UPPERCASE_Y               Char = 89
+	UPPERCASE_Z               Char = 90
+	LEFT_SQUARE_BRACKET       Char = 91
+	BACKSLASH                 Char = 92
+	RIGHT_SQUARE_BRACKET      Char = 93
+	CARET                     Char = 94
+	UNDERSCORE                Char = 95
+	GRAVE                     Char = 96
+	LOWERCASE_A               Char = 97
+	LOWERCASE_B               Char = 98
+	LOWERCASE_C               Char = 99
+	LOWERCASE_D               Char = 100
+	LOWERCASE_E               Char = 101
+	LOWERCASE_F               Char = 102
+	LOWERCASE_G               Char = 103
+	LOWERCASE_H               Char = 104
+	LOWERCASE_I               Char = 105
+	LOWERCASE_J               Char = 106
+	LOWERCASE_K               Char = 107
+	LOWERCASE_L               Char = 108
+	LOWERCASE_M               Char = 109
+	LOWERCASE_N               Char = 110
+	LOWERCASE_O               Char = 111
+	LOWERCASE_p               Char = 112
+	LOWERCASE_Q               Char = 113
+	LOWERCASE_R               Char = 114
+	LOWERCASE_S               Char = 115
+	LOWERCASE_T               Char = 116
+	LOWERCASE_U               Char = 117
+	LOWERCASE_V               Char = 118
+	LOWERCASE_W               Char = 119
+	LOWERCASE_X               Char = 120
+	LOWERCASE_Y               Char = 121
+	LOWERCASE_Z               Char = 122
+	LEFT_CURLY_BRACKET        Char = 123
+	VERTICAL_BAR              Char = 124
+	RIGHT_CURLY_BRACKET       Char = 125
+	TILDE                     Char = 126
+	DELETE                    Char = 127
 )
-
-func init() {
-	ALPHA = append(ALPHA, Range(0x41, 0x5A)...)
-	ALPHA = append(ALPHA, Range(0x61, 0x7A)...)
-	CTL = append(CTL, Range(0x00, 0x1F)...)
-	CTL = append(CTL, List(0x1F)...)
-	HEXDIG = append(HEXDIG, DIGIT...)
-	HEXDIG = append(HEXDIG, Range(0x41, 0x46)...) // A - F
-}
