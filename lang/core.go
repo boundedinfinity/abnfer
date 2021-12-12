@@ -1,63 +1,73 @@
 package lang
 
-import "github.com/boundedinfinity/abnfer/char"
+import (
+	"math"
 
-type Pattern [][]char.Char
-
-func (t *Pattern) CharRange(s, e char.Char) {
-	for _, c := range char.Range(s, e) {
-		*t = append(*t, char.Single(c))
-	}
-}
-
-func (t *Pattern) CharAnyOf(cs ...char.Char) {
-	*t = append(*t, cs)
-}
-
-func (t *Pattern) AppendPattern(ps ...Pattern) {
-	for _, p1 := range ps {
-		*t = append(*t, p1...)
-	}
-}
-
-var (
-	ALPHA Pattern
-	BIT   Pattern
-	CHAR  Pattern
-	CR    Pattern
-	LF    Pattern
-	CRLF  Pattern
-	VCHAR Pattern
-	SP    Pattern
-	HTAB  Pattern
-	WSP   Pattern
-	LWSP  Pattern
+	"github.com/boundedinfinity/abnfer/char"
 )
 
-func init() {
-	ALPHA.CharRange(char.UPPERCASE_A, char.UPPERCASE_Z)
-	ALPHA.CharRange(char.LOWERCASE_A, char.LOWERCASE_Z)
+var (
+	ALPHA Rule = NewTerminal("ALPHA", 1, 1,
+		char.Concat(
+			char.Range(char.UPPERCASE_A, char.UPPERCASE_Z),
+			char.Range(char.LOWERCASE_A, char.LOWERCASE_Z),
+		),
+	)
 
-	BIT.CharAnyOf(char.ZERO)
-	BIT.CharAnyOf(char.ONE)
+	BIT Rule = NewTerminal("BIT", 1, 1,
+		char.AnyOf(char.ZERO, char.ONE),
+	)
 
-	CHAR.CharRange(char.START_OF_HEADER, char.DELETE)
+	CHAR Rule = NewTerminal("CHAR", 1, 1,
+		char.Range(char.START_OF_HEADER, char.DELETE),
+	)
 
-	CR.CharAnyOf(char.CARRIAGE_RETURN)
+	CR Rule = NewTerminal("CR", 1, 1,
+		char.AnyOf(char.CARRIAGE_RETURN),
+	)
 
-	LF.CharAnyOf(char.LINE_FEED)
+	CRLF Rule = NewConcatenation("CRLF", 1, 1, []Rule{CR, LF})
 
-	CRLF.AppendPattern(LF)
-	CRLF.AppendPattern(CR, LF)
+	CTL Rule = NewAlternatives("CTL", 1, 1,
+		[]Rule{
+			NewTerminal("", 1, 1, char.Range(char.NULL, char.UNIT_SEPARATOR)),
+			NewTerminal("", 1, 1, char.AnyOf(char.DELETE)),
+		},
+	)
 
-	VCHAR.CharRange(char.EXCLAMATION_MARK, char.TILDE)
+	DIGIT = NewTerminal("DIGIT", 1, 1, char.Range(char.ZERO, char.NINE))
 
-	SP.CharAnyOf(char.SPACE)
+	DQUOTE = NewTerminal("DQUOTE", 1, 1, char.AnyOf(char.DOUBLE_QUOTE))
 
-	HTAB.CharAnyOf(char.HORIZONTAL_TAB)
+	HEXDIG = NewAlternatives("HEXDIG", 1, 1,
+		[]Rule{
+			DIGIT,
+			NewTerminal("", 1, 1, char.AnyOf(
+				char.UPPERCASE_A,
+				char.UPPERCASE_B,
+				char.UPPERCASE_C,
+				char.UPPERCASE_D,
+				char.UPPERCASE_E,
+				char.UPPERCASE_F,
+			)),
+		},
+	)
 
-	WSP.AppendPattern(SP, HTAB)
+	HTAB Rule = NewTerminal("HTAB", 1, 1, char.AnyOf(char.HORIZONTAL_TAB))
 
-	LWSP.AppendPattern(WSP)
-	LWSP.AppendPattern(CRLF, WSP)
-}
+	LF Rule = NewTerminal("LF", 1, 1, char.AnyOf(char.LINE_FEED))
+
+	LWSP Rule = NewAlternatives("LWSP", 0, math.MaxInt, []Rule{
+		WSP,
+		NewConcatenation("", 0, math.MaxInt, []Rule{CRLF, WSP}),
+	},
+	)
+
+	// OCTET Rule = NewTerminal("OCTET", 1, 1, char.Range(char.NULL, char.Char(0xFF)))
+
+	SP Rule = NewTerminal("SP", 1, 1, char.AnyOf(char.SPACE))
+
+	VCHAR Rule = NewTerminal("VCHAR", 1, 1, char.Range(char.EXCLAMATION_MARK, char.TILDE))
+
+	WSP Rule = NewAlternatives("WSP", 1, 1, []Rule{SP, HTAB})
+)

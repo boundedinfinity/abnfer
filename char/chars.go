@@ -76,7 +76,7 @@ const (
 	UPPERCASE_C               Char = 0x43
 	UPPERCASE_D               Char = 0x44
 	UPPERCASE_E               Char = 0x45
-	UPPERCASE_f               Char = 0x46
+	UPPERCASE_F               Char = 0x46
 	UPPERCASE_G               Char = 0x47
 	UPPERCASE_H               Char = 0x48
 	UPPERCASE_I               Char = 0x49
