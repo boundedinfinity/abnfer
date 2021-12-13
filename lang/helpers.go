@@ -1,20 +1,15 @@
 package lang
 
-func HasPrefix(s string, r Rule) bool {
-	// for _, cs := range p {
-	// 	v := string(cs)
-	// 	if strings.HasPrefix(s, v) {
-	// 		return true
-	// 	}
-	// }
-
-	return false
+func NewMap() *RuleMap {
+	return &RuleMap{
+		m: map[string]Rule{},
+	}
 }
 
-func minInt(a, b int) int {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
+func CoreMap() *RuleMap {
+	rm := NewMap()
+
+	rm.Append(ALPHA, CHAR)
+
+	return rm
 }

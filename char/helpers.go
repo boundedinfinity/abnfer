@@ -49,17 +49,15 @@ func AnyOf(cs ...Char) []Char {
 	return append([]Char{}, cs...)
 }
 
-func FilteredRange(s, e Char, fs []Char) []Char {
+type CharFilterFn func(v Char) bool
+
+func CharFilter(cs []Char, fn CharFilterFn) []Char {
 	var l []Char
 
-	for c := s; c <= e; c++ {
-		for _, f := range fs {
-			if c == f {
-				continue
-			}
+	for _, c := range cs {
+		if fn(c) {
+			l = append(l, c)
 		}
-
-		l = append(l, c)
 	}
 
 	return l

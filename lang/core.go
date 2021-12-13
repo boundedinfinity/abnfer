@@ -7,6 +7,10 @@ import (
 )
 
 var (
+	COREMAP = &RuleMap{
+		m: map[string]Rule{},
+	}
+
 	ALPHA Rule = NewTerminal("ALPHA", 1, 1,
 		char.Concat(
 			char.Range(char.UPPERCASE_A, char.UPPERCASE_Z),
@@ -71,3 +75,10 @@ var (
 
 	WSP Rule = NewAlternatives("WSP", 1, 1, []Rule{SP, HTAB})
 )
+
+func init() {
+	COREMAP.Append(
+		ALPHA, BIT, CHAR, CR, CRLF, CTL, DIGIT, DQUOTE,
+		HEXDIG, HTAB, LF, LWSP, SP, VCHAR, WSP,
+	)
+}
